@@ -27,24 +27,33 @@ class Game {
     // Init Function
     public static void Init() {
         Raylib.InitWindow(800,480, "buggame");
-        player = new Player( new(Raylib.GetScreenWidth()/2, Raylib.GetScreenHeight()/2));
-        player2 = new Player( new(Raylib.GetScreenWidth()/2, Raylib.GetScreenHeight()/2 + 100), Color.Blue);
-        
-        inputMapp1[KeyboardKey.A] = new(-1,0);
-        inputMapp1[KeyboardKey.D] = new(1,0);
-        inputMapp1[KeyboardKey.W] = new(0,-1);
-        inputMapp1[KeyboardKey.S] = new(0,1);
 
-        inputMapp2[KeyboardKey.Left] = new(-1,0);
-        inputMapp2[KeyboardKey.Right] = new(1,0);
-        inputMapp2[KeyboardKey.Up] = new(0,-1);
-        inputMapp2[KeyboardKey.Down] = new(0,1);
+        player = new Player( new(Raylib.GetScreenWidth()/2, Raylib.GetScreenHeight()/2), Color.Red);
+
+        Dictionary<KeyboardKey, Action> p1bindings = new Dictionary<KeyboardKey, Action>{
+            {KeyboardKey.A, player.MoveLeft},
+            {KeyboardKey.D, player.MoveRight},
+            {KeyboardKey.S, player.MoveDown},
+            {KeyboardKey.W, player.MoveUp}
+        };
+
+        player.RegisterBindings(p1bindings);
+
+        player2 = new Player( new(Raylib.GetScreenWidth()/2, Raylib.GetScreenHeight()/2 + 100), Color.Blue);
+        Dictionary<KeyboardKey, Action> p2bindings = new Dictionary<KeyboardKey, Action>{
+            {KeyboardKey.Left, player2.MoveLeft},
+            {KeyboardKey.Right, player2.MoveRight},
+            {KeyboardKey.Down, player2.MoveDown},
+            {KeyboardKey.Up, player2.MoveUp}
+        };
+        player2.RegisterBindings(p2bindings);
+
     }
 
     // Update function
     public static void Update() {
-        player.Update(inputMapp1);
-        player2.Update(inputMapp2);
+        player.Update();
+        player2.Update();
     }
 
     // Draw function

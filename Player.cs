@@ -1,8 +1,11 @@
 
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 
 class Player {
+
+    public Dictionary<KeyboardKey, Action> keyMappings;
 
     public Vector2 position;
     public Vector2 velocity;
@@ -11,13 +14,6 @@ class Player {
 
     public Color playerColor;
 
-    public Player(Vector2 start){
-        // initialize our properties
-        position = start;
-        velocity = new(0,0);
-        playerColor = Color.Red;
-    }
-
     public Player(Vector2 start, Color color){
         // initialize our properties
         position = start;
@@ -25,34 +21,35 @@ class Player {
         playerColor = color;
     }
 
-    public void MovePlayer() {
-
+    public void RegisterBindings(Dictionary<KeyboardKey, Action> mappings) {
+        keyMappings = mappings;
     }
 
-    public void Update(Dictionary<KeyboardKey, Vector2> inputMap) {
+    public void MoveUp() {
+        velocity.Y -= 1;
+    }
+
+    public void MoveDown() {
+        velocity.Y += 1;
+    }
+
+    public void MoveLeft() {
+        velocity.X -= 1;
+    }
+
+    public void MoveRight() {
+        velocity.X += 1;
+    }
+
+    public void Update() {
         velocity.X = 0;
         velocity.Y = 0;
 
-       foreach(KeyValuePair<KeyboardKey, Vector2> entry in inputMap){
+       foreach(KeyValuePair<KeyboardKey, Action> entry in keyMappings){
         if(Raylib.IsKeyDown(entry.Key)){
-            velocity += entry.Value;
+            entry.Value.Invoke();
         }
        }
-
-        // if (Raylib.IsKeyDown(KeyboardKey.D)) {
-        //    velocity.X = 1;
-        // }
-        // if (Raylib.IsKeyDown(KeyboardKey.A)) {
-        //    velocity.X = -1;
-        // }
-        // if (Raylib.IsKeyDown(KeyboardKey.W)) {
-        //    velocity.Y = -1;
-        // }
-        // if (Raylib.IsKeyDown(KeyboardKey.S)) {
-        //    velocity.Y = 1;
-        // }
-
-        // check collisions here?
 
         if (velocity.X != 0 || velocity.Y != 0) {
             position += 0.02f * Vector2.Normalize(velocity);

@@ -20,3 +20,4 @@ D:\documents\games\bugcatch\obj\Debug\net8.0\refint\bugcatch.dll
 D:\documents\games\bugcatch\obj\Debug\net8.0\bugcatch.pdb
 D:\documents\games\bugcatch\obj\Debug\net8.0\bugcatch.genruntimeconfig.cache
 D:\documents\games\bugcatch\obj\Debug\net8.0\ref\bugcatch.dll
+D:\documents\games\bugcatch\obj\Debug\net8.0\bugcatch.sourcelink.json
